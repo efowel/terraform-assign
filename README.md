@@ -2,7 +2,7 @@
 ![Diagram image](docs/General-Diagram.png)
 
 ### Migration Changes and Improvments
-* The General Structure Diagram can be also use for EKS, ECS implemenation
+* The General Structure Diagram can be also used for EKS, ECS implemenation
 * Nginx-Reverse-Proxy removed to be replaced by ALB
 * All Instances are in autoscaling spread to all AZ should be minimum of 2 for HA
 * Data Resources redis and mysql configured in multi AZ minimum of 2 for HA
@@ -10,8 +10,8 @@
 * Route53 to use Private/Public DNS for on-prem DNS
 
 ### Terraform State
-The project was divided into 2 parts each have its own terraform state, to isolate/separate acutal infra and application
-1. `resources/app` - Contains Resources needed to run the application such as EC2, RDS, ALB etc.
+The project was divided into 2 parts, each have its own terraform state to isolate/separate acutal infra and application.
+1. `resources/app`   - Contains Resources needed to run the application such as EC2, RDS, ALB etc.
 2. `resources/infra` - Contains the AWS cloud infra such as VPC, SUBNETS, ROUTING, etc.
 
 ### Versions and Environment
@@ -64,6 +64,6 @@ terraform apply  -var-file=./vars-{workspace}.tfvars
 
 
 
-### Questions
+### Modules
 
 ### Improvements

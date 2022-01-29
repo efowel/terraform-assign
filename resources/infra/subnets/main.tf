@@ -87,7 +87,7 @@ resource "aws_route_table_association" "private-rt-associate" {
 }
 ######################
 
-####DAT SUBNET####
+####DATA SUBNET####
 ##Creates Subnets Based on Number of AZ in the Region
 resource "aws_subnet" "data-subnet" {
   count               = length(tolist(data.aws_availability_zones.available.names))
