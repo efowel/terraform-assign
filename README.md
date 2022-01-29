@@ -1,44 +1,62 @@
 # Versions and Environment
 ```
-Terraform v0.15.5
+Terraform v1.1.4
 on darwin_amd64
-+ provider registry.terraform.io/hashicorp/google v3.52.0
-+ provider registry.terraform.io/hashicorp/helm v2.4.1
-+ provider registry.terraform.io/hashicorp/kubernetes v2.6.1
-+ provider registry.terraform.io/hashicorp/tls v3.1.0
-+ provider registry.terraform.io/vancluever/acme v2.7.0
++ provider registry.terraform.io/hashicorp/aws v3.67.0
 ```
 
 
 # Usage
 ```
-cd to projects/{google projects}
+cd to resources/{app | infra}
 
-terraform init
-terraform plan -out plan-out.terraform
-terraform apply plan-out.terraform
+terraform init -backend-config=../../backend/backend-{workspace}-app.tf
+terraform init -backend-config=../../backend/backend-{workspace}-infra.tf
 
-To check
+terraform plan  -var-file=./vars-{workspace.tfvars
 
-terraform plan -refresh-only
+terraform apply  -var-file=./vars-{workspace.tfvars
 
 ```
 # Structure
 ```
-demo-sre
-    ├── docs            # files fore readme and notes
-    ├── helm-charts     # storage location of helm charts (global)
-    ├── modules         # storage location of moduels (global)
-    ├── projects        # maps to Goole Porjects
-    └── secrets         # storage location of sensitive data
-```
-
-# Cluster Login
-```
-gcloud container clusters get-credentials justin-sre
+.
+├── README.md
+├── backend
+│   ├── backend-dev-app.tf
+│   ├── backend-dev-infra.tf
+│   └── backend-prod.tf
+└── resources
+    ├── app
+    │   ├── compute
+    │   │   ├── alb
+    │   │   └── autoscale
+    │   ├── data
+    │   │   ├── rds
+    │   │   └── redis
+    │   ├── network
+    │   │   └── secgroup
+    │   ├── main.tf
+    │   ├── variables.tf
+    │   └── vars-{worksapce}.tfvars
+    └── infra
+        ├── main.tf
+        ├── subnets
+        │   └── main.tf
+        └── vpc
+        │    └── main.tf
+        ├── main.tf
+        ├── variables.tf
+        └── vars-{worksapce}.tfvars
 ```
 
 # Terraform State
+
+The project was divided into 2 parts each have its own terraform state, to isolate/separate acutal infra and application
+
+1. `resources/app` - Contains Resources needed to run the application such as EC2, RDS, ALB etc.
+
+2. `resources/infra` - Contains the AWS cloud infra such as VPC, SUBNETS, ROUTING, etc.
 
 # Questions
 
