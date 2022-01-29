@@ -68,8 +68,8 @@ terraform apply  -var-file=./vars-{workspace}.tfvars
 
 Each modules has a README with documentation:
 
-- [VPC](./resoures/infra/vpc/README.md)
-- [Subnet]( ./resoures/infra/subnets/README.md)
+- [VPC](./resources/infra/vpc/README.md)
+- [Subnet]( ./resources/infra/subnets/README.md)
 - Autoscaling Group
 - Application Load Balancer
 - RDS
