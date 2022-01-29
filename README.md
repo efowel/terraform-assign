@@ -1,31 +1,46 @@
-# Versions and Environment
+# General Diagram
+![Diagram image](docs/General-Diagram.png)
+
+### Migration Changes and Improvments
+* The General Structure Diagram can be also use for EKS, ECS implemenation
+* Nginx-Reverse-Proxy removed to be replaced by ALB
+* All Instances are in autoscaling spread to all AZ should be minimum of 2 for HA
+* Data Resources redis and mysql configured in multi AZ minimum of 2 for HA
+* VPC was divided in 9 subnets 3 x PUBLIC, PRIVATE and DATA subnets
+* Route53 to use Private/Public DNS for on-prem DNS
+
+### Terraform State
+The project was divided into 2 parts each have its own terraform state, to isolate/separate acutal infra and application
+1. `resources/app` - Contains Resources needed to run the application such as EC2, RDS, ALB etc.
+2. `resources/infra` - Contains the AWS cloud infra such as VPC, SUBNETS, ROUTING, etc.
+
+### Versions and Environment
 ```
+aws-cli/2.4.3 Python/3.8.8 Darwin/21.2.0 exe/x86_64
 Terraform v1.1.4
-on darwin_amd64
-+ provider registry.terraform.io/hashicorp/aws v3.67.0
+provider registry.terraform.io/hashicorp/aws v3.67.0
+
+Downlaod Terraform Binary : https://releases.hashicorp.com/terraform/
 ```
 
-
-# Usage
+### Usage
 ```
 cd to resources/{app | infra}
 
 terraform init -backend-config=../../backend/backend-{workspace}-app.tf
 terraform init -backend-config=../../backend/backend-{workspace}-infra.tf
 
-terraform plan  -var-file=./vars-{workspace.tfvars
+terraform plan  -var-file=./vars-{workspace}.tfvars
 
-terraform apply  -var-file=./vars-{workspace.tfvars
+terraform apply  -var-file=./vars-{workspace}.tfvars
 
 ```
-# Structure
+### Structure
 ```
 .
 ├── README.md
 ├── backend
-│   ├── backend-dev-app.tf
-│   ├── backend-dev-infra.tf
-│   └── backend-prod.tf
+│   └── backend-{workspace}-{app|infra}.tf
 └── resources
     ├── app
     │   ├── compute
@@ -40,24 +55,15 @@ terraform apply  -var-file=./vars-{workspace.tfvars
     │   ├── variables.tf
     │   └── vars-{worksapce}.tfvars
     └── infra
-        ├── main.tf
         ├── subnets
-        │   └── main.tf
         └── vpc
-        │    └── main.tf
         ├── main.tf
         ├── variables.tf
         └── vars-{worksapce}.tfvars
 ```
 
-# Terraform State
 
-The project was divided into 2 parts each have its own terraform state, to isolate/separate acutal infra and application
 
-1. `resources/app` - Contains Resources needed to run the application such as EC2, RDS, ALB etc.
+### Questions
 
-2. `resources/infra` - Contains the AWS cloud infra such as VPC, SUBNETS, ROUTING, etc.
-
-# Questions
-
-# Improvements
+### Improvements
