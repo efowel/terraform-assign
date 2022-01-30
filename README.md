@@ -73,7 +73,7 @@ Each modules has a README with documentation:
 - [Autoscaling Group](./resources/app/compute/autoscale/README.md)
 - [Application Load Balancer](./resources/app/compute/alb/README.md)
 - [RDS](./resources/app/data/rds/README.md)
-- Redis
+- [Redis](./resources/app/data/redis/README.md)
 - Security Group
 
 ### Improvements
