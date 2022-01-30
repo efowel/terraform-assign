@@ -1,7 +1,7 @@
 project             = "DigitalBank"
 
 #ALB
-alb_name            = "test"
+alb_name            = "main"
 
 #Nginx
 name_nginx          = "nginx-static" 

@@ -24,6 +24,7 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+#Create ALB
 module "alb" {
   source                = "./compute/alb"
   project               = var.project
@@ -33,6 +34,27 @@ module "alb" {
   internal              = false  
 }
 
+#ALB Rule to Point Nginx
+module "alb-rule-nginx" {
+  source                = "./compute/alb-rule"
+  project               = var.project
+  name                  = "ngin-static"
+  listener_arn          = module.alb.alb_listener_http_arn
+  target_group_arn      = module.nginx-static.tg_arn
+  condition_value       = ["/"]
+}
+
+#ALB Rule to Point Nodejs API
+module "alb-rule-nodejs" {
+  source                = "./compute/alb-rule"
+  project               = var.project
+  name                  = "nodejs-api"
+  listener_arn          = module.alb.alb_listener_http_arn
+  target_group_arn      = module.nodejs.tg_arn
+  condition_value       = ["/api"]
+}
+
+#Create Nginx ASG
 module "nginx-static" {
   source                = "./compute/autoscale"
   project               = var.project
@@ -48,6 +70,7 @@ module "nginx-static" {
   vpc_zone_identifier   = data.terraform_remote_state.vpc.outputs.subnet_priv_id
 }
 
+#Create NodeJs ASG
 module "nodejs" {
   source                = "./compute/autoscale"
   project               = var.project
@@ -63,6 +86,7 @@ module "nodejs" {
   vpc_zone_identifier   = data.terraform_remote_state.vpc.outputs.subnet_priv_id
 }
 
+#Create Caceh Redis
 module "redis" {
   source                = "./data/redis"
   project               = var.project
@@ -72,6 +96,7 @@ module "redis" {
   subnet_ids_redis      = data.terraform_remote_state.vpc.outputs.subnet_data_id
 }
 
+#Create RDS Mysql
 module "mysql" {
   source               =  "./data/rds"
   project              = var.project
@@ -85,3 +110,4 @@ module "mysql" {
   username             = var.username
   subnet_ids_rds       = data.terraform_remote_state.vpc.outputs.subnet_data_id
 }
+

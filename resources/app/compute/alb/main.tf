@@ -8,8 +8,10 @@ variable "internal"            { description = "Internal | External bool" }
 #variable "default_tgroup"      { description = "ALB Default Target Group" }
 
 ######OUTPUT######
-output "dns_name"            {  value = aws_alb.alb.dns_name }
-output "alb_arn"             {  value = aws_alb.alb.arn }
+output "dns_name"                 {  value = aws_alb.alb.dns_name }
+output "alb_arn"                  {  value = aws_alb.alb.arn }
+output "alb_listener_http_arn"    {  value = aws_alb_listener.http.arn }
+output "default_tg_arn"           {  value = aws_alb_target_group.default.arn }
 
 
 resource "aws_alb_target_group" "default" {
