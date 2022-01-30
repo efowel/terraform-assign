@@ -72,7 +72,7 @@ Each modules has a README with documentation:
 - [Subnet](./resources/infra/subnets/README.md)
 - [Autoscaling Group](./resources/app/compute/autoscale/README.md)
 - [Application Load Balancer](./resources/app/compute/alb/README.md)
-- RDS
+- [RDS](./resources/app/data/rds/README.md)
 - Redis
 - Security Group
 
