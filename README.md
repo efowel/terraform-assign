@@ -70,7 +70,7 @@ Each modules has a README with documentation:
 
 - [VPC](./resources/infra/vpc/README.md)
 - [Subnet](./resources/infra/subnets/README.md)
-- [Autoscaling Group](./resources/app/compute/alb/README.md)
+- [Autoscaling Group](./resources/app/compute/autoscale/README.md)
 - Application Load Balancer
 - RDS
 - Redis
